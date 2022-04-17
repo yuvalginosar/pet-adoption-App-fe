@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import useAuth from '../hooks/useAuth';
 
 function LoginPage(props) {
+    const { onLogin } = useAuth();
+
     // const {modalShow, handleModalShow} = props
     const {showLogIn, handleCloseLogIn} = props
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
 
-    function handleLogin () {
-
-        handleCloseLogIn()
+    async function handleLogin () {
+        try{
+            await onLogin(email, pwd)
+            handleCloseLogIn()
+        }catch (err) {
+            console.log(err)
+        }
     }
 
     return (

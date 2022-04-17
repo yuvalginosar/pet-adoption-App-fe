@@ -16,7 +16,7 @@ function SignUp(props) {
 
 
     function onSignUp () {
-        if (pwd !== ConfirmPwd) setIsPwdMatch(false)
+        // if (pwd !== ConfirmPwd) setIsPwdMatch(false)
         handleSignUp (firstName,lastName, email, pwd, phoneNumber)
         handleCloseSignUp()
     }

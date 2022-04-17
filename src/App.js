@@ -10,7 +10,7 @@ import Pets from "./pages/Pets";
 import Profile from "./pages/Profile";
 import petsContext from "./contexts/petsContext";
 import PetDetailsPage from "./pages/PetDetailsPage";
-
+import SearchBar from "./components/SearchBar";
 // import LoginPage from "./components/LoginPage";
 // import SignUp from "./components/SignUp";
 
@@ -27,6 +27,7 @@ function App() {
           <Route path= 'Profile' element={<Profile />} />
           <Route path="Pets" element={<Pets />} />
           <Route path="PetDetailsPage" element={<PetDetailsPage />} />
+          <Route path="SearchBar" element={<SearchBar />} />
 
         </Routes>
       </petsContext.Provider> 

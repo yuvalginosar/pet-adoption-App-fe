@@ -24,15 +24,15 @@ function HomePage(props) {
                 
         {activeUser && 
         
-        <h1 className="display-1">Welcom {activeUser.firstName} {activeUser.lastName}!</h1>
+        <h1 className="display-1">Welcom {activeUser.first_name} {activeUser.last_name}!</h1>
         
         
         }
         <h1 className="display-1">Bring a new friend to your family!</h1>
         <h3>Here you can find dogs and cats looking for a home. Adopt a new friend for life or provide a temporary foster home</h3>
-        <div className='my-4'>
+        {!activeUser &&<div className='my-4'>
         <LoginPage showLogIn={showLogIn} handleCloseLogIn={handleCloseLogIn}/>
-        <SignUp showSignUp={showSignUp} handleCloseSignUp={handleCloseSignUp}/>
+         <SignUp showSignUp={showSignUp} handleCloseSignUp={handleCloseSignUp}/>
         <Button 
             variant="secondary" 
             size="sm"
@@ -50,9 +50,9 @@ function HomePage(props) {
         >
             Login
         </Button>
-
+        
         </div>  
-
+}
     </div>
   );
 }

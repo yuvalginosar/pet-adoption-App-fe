@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import axios from 'axios'
+import { login, signup } from "../services/server";
 
 function AuthProvider({children}) {
-    const [activeUser, setActiveUser] = useState({'firstName': 'test1',
-'lastName': 'test2', 'pets': ['a', 'b']});
+    const [activeUser, setActiveUser] = useState(null);
     const navigate = useNavigate();
 
-    // async function handleLogin(email, pwd) {
-        // try {
-        //     setActiveUser(user);
-        //     navigate('/');
-        // } catch (e) {
-        //     console.error(e)
-        // }
-    // }
-
+    async function handleLogin(email, password) {
+        try {
+          const user = await login(email, password);
+          setActiveUser(user);
+          console.log(activeUser)
+          navigate('/');
+        } catch (e) {
+            console.error(e)
+        }
+    }
+   
     async function editUser(firstName,lastName, email, pwd, phoneNumber, userBio) {
         try{
 
@@ -25,23 +27,20 @@ function AuthProvider({children}) {
         }
     }
     async function handleSignUp(firstName,lastName, email, pwd, phoneNumber) {
-    //     try { 
-    //         const newUser = {
-    //           'email': email, 
-    //           'userName': userName,
-    //         }
-    //         setActiveUser(user);
-    //         navigate('/');
-    //     } catch(error) {
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //     };
+        try { 
+          const user = await signup(firstName,lastName, email, pwd, phoneNumber)
+            setActiveUser(user);
+            navigate('/');
+        } catch(error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        };
     }
 
 
   return (
     <AuthContext.Provider
-      value={{ activeUser, handleSignUp, editUser}}
+      value={{ activeUser, handleSignUp, editUser, onLogin: handleLogin,}}
     >
       {children}
     </AuthContext.Provider>

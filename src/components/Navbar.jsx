@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
 
+
+
+
 function PetsNavbar(props) {
+  
+
     return (
         <Navbar bg="light" expand="lg">
         <Container>
