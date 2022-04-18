@@ -38,5 +38,24 @@ async function getPets(adoptionStatus='', type='', height='', weight='', name=''
     console.log(err);
   }
 }
+async function getPetById(id) {
+  try {
+    const response = await api.get(`/pet/${id}`);
+    console.log(response)
+    return (response.data[0]);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-export {login, signup, getPets}
+async function getUserPetsById(id) {
+  try {
+    const response = await api.get(`/pet/user/${id}`);
+    console.log(response)
+    return (response.data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export {login, signup, getPets, getPetById, getUserPetsById}

@@ -4,7 +4,7 @@ import PetCard from '../components/PetCard';
 import petsContext from '../contexts/petsContext';
 import mockPets from '../data/mockPets';
 import useAuth from '../hooks/useAuth';
-import {getPets} from '../services/server.js'
+import {getPets, getUserPetsById} from '../services/server.js'
 function Pets(props) {
     // const {pets} = useContext(petsContext)
     const { activeUser } = useAuth();
@@ -15,8 +15,9 @@ function Pets(props) {
   
     useEffect(() => {
        async function fetchPets() {
-           const curPets = await getPets()
+           const [curPets, curruserPets] = await Promise.all([getPets(), getUserPetsById()]) 
             setPets(curPets)
+            setMyPets(curruserPets)
         // setPets(mockPets)
 
       }

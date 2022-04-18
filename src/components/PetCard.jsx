@@ -11,14 +11,15 @@ function PetCard({pet}) {
         <Card.Body>
           <Card.Title>{pet.name}</Card.Title>
           <Card.Text>
-              <p>adoption status: {pet.adoptionStatus}</p>
+              <p>adoption status: {pet.adoption_status}</p>
           </Card.Text>
         </Card.Body>
         <Button
-        variant="secondary" 
-        size="sm"
-          // onClick={() => navigate("/pets/" + pet.id)}>
-          >
+          variant="secondary" 
+          size="sm"
+          onClick={() => navigate(`/PetDetailsPage/${pet.id}`)}
+        >
+          
             See more
         </Button>
       </Card>
