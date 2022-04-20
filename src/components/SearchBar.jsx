@@ -129,10 +129,10 @@ function onSwitchOn() {
       <ListGroup className="result-box">
         {results &&
          <Row xs={1} md={2} className="g-4 mt-2">
-         {results.map((pet, key) => (
+         {results.map((pet) => (
              <Col>
                  <PetCard
-                     key={key}
+                     key={pet.id}
                      pet={pet}
                      />
              </Col>

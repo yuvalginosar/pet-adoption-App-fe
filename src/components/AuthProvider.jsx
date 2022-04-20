@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import axios from 'axios'
-import { login, signup } from "../services/server";
+import { login, signup, getUserPetsById } from "../services/server";
 
 function AuthProvider({children}) {
     const [activeUser, setActiveUser] = useState(null);
@@ -11,6 +11,8 @@ function AuthProvider({children}) {
     async function handleLogin(email, password) {
         try {
           const user = await login(email, password);
+          const userPets = await getUserPetsById(user.id)
+          user.pets = userPets
           setActiveUser(user);
           console.log(activeUser)
           navigate('/');
