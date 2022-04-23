@@ -29,6 +29,9 @@ function PetsNavbar(props) {
                   <Nav.Link to="/SearchBar" as={NavLink}>
                     Search
                   </Nav.Link>
+                  <Nav.Link to="/addPet" as={NavLink}>
+                  Add Pet
+                  </Nav.Link>
                 </>
               )}
             </Nav>

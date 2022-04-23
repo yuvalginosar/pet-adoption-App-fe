@@ -71,8 +71,10 @@ function PetDetailsPage(props) {
         handleShow()
     }
 
+   
     return (
         <Container>
+            {console.log(userAction)}
             {userAction && <PetModal name={pet.name} action={userAction} show={show} handleClose={handleClose}/>}
            {pet && <Card className="my-3">
             {/* <Row> */}
@@ -111,6 +113,7 @@ function PetDetailsPage(props) {
                         <p>Weight: {pet.weight}Kg</p>
                         <p>Color: {pet.color}</p>
                         <p>Bio: {pet.bio}</p>
+                        {/* <p>Dietary: {JSON.parse(pet.dietary_restrictions).join()}</p> */}
                         <p>Hypoallergnic: {pet.hypoallergenic ? 'yes' : 'no'}</p>
                         {/* <p>Dietery: {pet.dietery.join(', ')}</p> */}
                         <p>Breed: {pet.breed}</p>
@@ -143,8 +146,8 @@ function PetDetailsPage(props) {
                     aria-hidden="true"
                 />}
                 </div>}
-                {(pet.adoption_status === "Fostered" && (petStatus === 'foster' || petStatus === "save")) && <div className='mb-2'>
-                    <Button 
+                {(pet.adoption_status === "Fostered" && (petStatus !== 'adopt' )) && <div className='mb-2'>
+                    <Button className='mx-2 my-2'
                         variant="success" 
                         size="sm"
                         type = 'button'

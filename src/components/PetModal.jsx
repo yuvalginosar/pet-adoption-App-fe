@@ -29,7 +29,7 @@ function PetModal({name, action, show, handleClose}) {
             } 
         }
         editTitle()
-    }, [])
+    })
 
     return (
         <Modal show={show} onHide={handleClose}>

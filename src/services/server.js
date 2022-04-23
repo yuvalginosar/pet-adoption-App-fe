@@ -60,7 +60,7 @@ async function getUserPetsById(id) {
 
 async function savePet(petId, userId){
 try {
-  const response = await api.post(`pet/${petId}/save`, {id: userId})
+  const response = await api.post(`/pet/${petId}/save`, {id: userId})
   console.log(response)
   return (response.data);
 } catch (err) {
@@ -70,7 +70,7 @@ try {
 
 async function deleteSavedPet(petId, userId){
   try {
-    const response = await api.delete(`pet/${petId}/save`, { data: {id: userId}})
+    const response = await api.delete(`/pet/${petId}/save`, { data: {id: userId}})
     return (response);
   } catch (err) {
     console.log(err);
@@ -79,7 +79,7 @@ async function deleteSavedPet(petId, userId){
 
   async function adoptOrFosterPet(petId, userId, action, curPetStatus){
     try {
-      const response = await api.post(`pet/${petId}/adopt`, {id: userId, type: action, curPetStatus: curPetStatus})
+      const response = await api.post(`/pet/${petId}/adopt`, {id: userId, type: action, curPetStatus: curPetStatus})
       return (response.data);
     } catch (err) {
       console.log(err);
@@ -88,12 +88,39 @@ async function deleteSavedPet(petId, userId){
 
     async function returnPet(petId, userId){
       try {
-        const response = await api.post(`pet/${petId}/return`, {id: userId})
+        const response = await api.post(`/pet/${petId}/return`, {id: userId})
         return (response.data);
       } catch (err) {
         console.log(err);
       }
       }
 
+    async function addPet(type, 
+      name, 
+      adoptionStatus, 
+      weight,
+      height,
+      color,
+      bio,
+      breed,
+      hypoallergenic,
+      petDietary) {
+      try {
+        const response = await api.post(`/pet`, {type, 
+          name, 
+          adoptionStatus, 
+          weight,
+          height,
+          color,
+          bio,
+          breed,
+          hypoallergenic,
+          petDietary})
+        return (response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
-export {login, signup, getPets, getPetById, getUserPetsById, savePet, deleteSavedPet, adoptOrFosterPet, returnPet}
+
+export {login, signup, getPets, getPetById, getUserPetsById, savePet, deleteSavedPet, adoptOrFosterPet, returnPet, addPet}

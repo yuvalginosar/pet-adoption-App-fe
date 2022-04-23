@@ -17,7 +17,7 @@ function PetCard({pet}) {
         <Button
           variant="secondary" 
           size="sm"
-          onClick={() => navigate(`/PetDetailsPage/${pet.id}`)}
+          onClick={() => navigate(`/Pets/${pet.id}`)}
         >
           
             See more
