@@ -11,8 +11,8 @@ function AuthProvider({children}) {
     async function handleLogin(email, password) {
         try {
           const user = await login(email, password);
-          const userPets = await getUserPetsById(user.id)
-          user.pets = userPets
+          // const userPets = await getUserPetsById(user.id)
+          // user.pets = userPets
           setActiveUser(user);
           console.log(activeUser)
           navigate('/');

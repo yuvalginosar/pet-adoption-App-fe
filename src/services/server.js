@@ -7,9 +7,12 @@ const api = axios.create({
 async function login(email, password) {
     try {
       const response = await api.post('/login', { email, password });
+      console.log(response.status)
       return response.data;
     } catch (err) {
+      alert(err)
       console.log(err);
+      throw new Error(err)
     }
 }
 
@@ -95,27 +98,21 @@ async function deleteSavedPet(petId, userId){
       }
       }
 
-    async function addPet(type, 
-      name, 
-      adoptionStatus, 
-      weight,
-      height,
-      color,
-      bio,
-      breed,
-      hypoallergenic,
-      petDietary) {
+    async function addPet(newPet) {
+      const formData = new FormData();
+      formData.append("name", newPet.name);
+      formData.append("type", newPet.type);
+      formData.append("adoptionStatus", newPet.adoptionStatus);
+      formData.append("weight", newPet.weight);
+      formData.append("height", newPet.height);
+      formData.append("color", newPet.color);
+      formData.append("bio", newPet.bio);
+      formData.append("breed", newPet.breed);
+      formData.append("hypoallergenic", newPet.hypoallergenic);
+      formData.append("petDietary", newPet.petDietary);
+      formData.append("image", newPet.image, newPet.image.name);
       try {
-        const response = await api.post(`/pet`, {type, 
-          name, 
-          adoptionStatus, 
-          weight,
-          height,
-          color,
-          bio,
-          breed,
-          hypoallergenic,
-          petDietary})
+        const response = await api.post(`/pet`, formData)
         return (response.data);
       } catch (err) {
         console.log(err);

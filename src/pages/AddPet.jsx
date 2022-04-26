@@ -1,4 +1,4 @@
-import React, { useState, Component  } from 'react';
+import React, { useState, Component, useRef  } from 'react';
 
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
@@ -19,8 +19,6 @@ function AddPet(props) {
       ]
       const animatedComponents = makeAnimated();
 
-      
-
 
     const [type, setType] = useState('dog')
     const [name, setName] = useState("");
@@ -33,25 +31,13 @@ function AddPet(props) {
     const [hypoallergenic  , setHypoallergenic  ] = useState(false);
     const [dietary, setDietary] = useState()
     const { activeUser } = useAuth();
-    const [petImg, setPetImg] = useState(null);
-
-    
+    const fileImgRef = useRef();
 
     async function onAddPet () {
         const petDietary = JSON.stringify(dietary.map((val) => val.value))
-        // const newPet = {
-        //     type, 
-        //     name, 
-        //     adoptionStatus, 
-        //     weight,
-        //     height,
-        //     color,
-        //     bio,
-        //     breed: breed,
-        //     hypoallergenic,
-        //     petDietary
-        // }
-        const response = await addPet(type, 
+        const response = await addPet(
+            {
+            type, 
             name, 
             adoptionStatus, 
             weight,
@@ -60,8 +46,9 @@ function AddPet(props) {
             bio,
             breed,
             hypoallergenic,
-            petDietary)
-        console.log(response)
+            petDietary,
+            image: fileImgRef.current.files[0]
+        })
     }
        console.log(adoptionStatus)
     return (
@@ -85,6 +72,7 @@ function AddPet(props) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Name</Form.Label>
                         <Form.Control type="text" 
+                            required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -94,11 +82,9 @@ function AddPet(props) {
 
 
                     <Form.Label className='mt-3'>Upload pets picture</Form.Label>
-                    <Form.Control
-                        type="file"
-                        placeholder="Drag your image here"
-                        onChange={(e) => setPetImg(e.target.files[0])}
-                    />
+                    <Form.Group controlId="formFile" className="mb-3">
+                        <Form.Control ref={fileImgRef} type="file" accept="image/*" />
+                    </Form.Group>
 
 
                 <Dropdown className='my-3'>

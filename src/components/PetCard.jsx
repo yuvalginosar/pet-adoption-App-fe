@@ -7,7 +7,7 @@ function PetCard({pet}) {
     return (
         <Card >
 
-        {pet.picture ? <Card.Img variant="top"  src={pet.picture} /> : <p>'no img'</p>}
+        {pet.picture ? <Card.Img variant="top" fluid='true' src={pet.picture} /> : <p>'no img'</p>}
         <Card.Body>
           <Card.Title>{pet.name}</Card.Title>
           <Card.Text>
