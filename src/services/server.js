@@ -16,9 +16,9 @@ async function login(email, password) {
     }
 }
 
-async function signup(firstName,lastName, email, pwd, phoneNumber) {
+async function signup(newUser) {
   try {
-    const response = await api.post('/signup', { firstName, lastName, email, pwd, phoneNumber });
+    const response = await api.post('/signup', newUser);
     return response.data;
   } catch (err) {
     console.log(err);

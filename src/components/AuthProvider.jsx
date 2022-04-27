@@ -28,9 +28,9 @@ function AuthProvider({children}) {
 
         }
     }
-    async function handleSignUp(firstName,lastName, email, pwd, phoneNumber) {
+    async function handleSignUp(newUser) {
         try { 
-          const user = await signup(firstName,lastName, email, pwd, phoneNumber)
+          const user = await signup(newUser)
             setActiveUser(user);
             navigate('/');
         } catch(error) {

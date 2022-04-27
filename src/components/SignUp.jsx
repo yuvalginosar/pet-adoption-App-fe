@@ -17,7 +17,7 @@ function SignUp(props) {
 
     function onSignUp () {
         // if (pwd !== ConfirmPwd) setIsPwdMatch(false)
-        handleSignUp (firstName,lastName, email, pwd, phoneNumber)
+        handleSignUp ({firstName,lastName, email, pwd, phoneNumber, ConfirmPwd})
         handleCloseSignUp()
     }
 
@@ -32,7 +32,6 @@ function SignUp(props) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>First Name</Form.Label>
                         <Form.Control type="text" 
-                            placeholder="your name" 
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
@@ -43,7 +42,6 @@ function SignUp(props) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Family Name</Form.Label>
                         <Form.Control type="text" 
-                            placeholder="your family name" 
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                         />
@@ -54,7 +52,6 @@ function SignUp(props) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" 
-                            placeholder="Enter email" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -65,7 +62,6 @@ function SignUp(props) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control type="text" 
-                            placeholder="Enter email" 
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         />
@@ -76,7 +72,6 @@ function SignUp(props) {
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" 
-                            placeholder="Password" 
                             value={pwd}
                             onChange={(e) => setPwd(e.target.value)}
                         />
@@ -84,7 +79,6 @@ function SignUp(props) {
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control type="password" 
-                            placeholder="Password" 
                             value={ConfirmPwd}
                             onChange={(e) => setConfirmPwd(e.target.value)}
                         />

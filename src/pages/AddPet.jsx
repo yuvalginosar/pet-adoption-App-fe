@@ -5,10 +5,12 @@ import makeAnimated from 'react-select/animated';
 import { addPet } from '../services/server';
 import { Button, Form, Modal, Alert, Container, Dropdown } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 function AddPet(props) {
+    const navigate = useNavigate();
 
 
-    const options = [
+    const Dietaryoptions = [
         { value: 'Low fat', label: 'Low fat' },
         { value: 'Sensative Stomach', label: 'Sensative Stomach' },
         { value: 'Joint Care', label: 'Joint Care' },
@@ -19,7 +21,10 @@ function AddPet(props) {
       ]
       const animatedComponents = makeAnimated();
 
-
+    // const adoptingOptions = [{ value: 'Low fat', label: 'Low fat' },
+    // { value: 'Sensative Stomach', label: 'Sensative Stomach' },
+    // { value: 'Joint Care', label: 'Joint Care' }]
+    
     const [type, setType] = useState('dog')
     const [name, setName] = useState("");
     const [adoptionStatus, setAdoptionStatus] = useState("");
@@ -50,7 +55,8 @@ function AddPet(props) {
             image: fileImgRef.current.files[0]
         })
     }
-       console.log(adoptionStatus)
+        navigate('/');
+        console.log(adoptionStatus)
     return (
         <Container> 
             <h1>Add a new pet</h1>
@@ -69,6 +75,17 @@ function AddPet(props) {
                         >Cat</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
+
+
+                {/* <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    defaultValue={adoptingOptions[0]}
+                   
+                    options={adoptingOptions}
+                /> */}
+
+
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Name</Form.Label>
                         <Form.Control type="text" 
@@ -157,7 +174,7 @@ function AddPet(props) {
                         closeMenuOnSelect={false}
                         components={animatedComponents}
                         isMulti
-                        options={options} 
+                        options={Dietaryoptions} 
                         onChange={(e) => setDietary(e)}
                         />
 
