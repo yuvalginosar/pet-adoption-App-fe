@@ -22,7 +22,7 @@ const [isResultsEmpty, setIsResultsEmpty] = useState(false)
 
 async function fetchPets() {
   const curPets = await getPets(adoptionStatus, type, height, weight, name)
-  console.log(curPets.length)
+  // console.log(curPets.length)
    setResults(curPets)
    if (curPets.length === 0) {
      setIsResultsEmpty(true)
@@ -130,9 +130,8 @@ function onSwitchOn() {
         {results &&
          <Row xs={1} md={2} className="g-4 mt-2">
          {results.map((pet) => (
-             <Col>
+             <Col key={pet.id} >
                  <PetCard
-                     key={pet.id}
                      pet={pet}
                      />
              </Col>

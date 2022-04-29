@@ -1,14 +1,15 @@
 import axios from 'axios';
 const api = axios.create({
   baseURL: 'http://localhost:8080',
+  withCredentials: true,
 });
 
 
 async function login(email, password) {
     try {
       const response = await api.post('/login', { email, password });
-      console.log(response.status)
-      return response.data;
+      console.log(response)
+      return response.data.user;
     } catch (err) {
       alert(err)
       console.log(err);
@@ -98,26 +99,36 @@ async function deleteSavedPet(petId, userId){
       }
       }
 
-    async function addPet(newPet) {
-      const formData = new FormData();
-      formData.append("name", newPet.name);
-      formData.append("type", newPet.type);
-      formData.append("adoptionStatus", newPet.adoptionStatus);
-      formData.append("weight", newPet.weight);
-      formData.append("height", newPet.height);
-      formData.append("color", newPet.color);
-      formData.append("bio", newPet.bio);
-      formData.append("breed", newPet.breed);
-      formData.append("hypoallergenic", newPet.hypoallergenic);
-      formData.append("petDietary", newPet.petDietary);
-      formData.append("image", newPet.image, newPet.image.name);
-      try {
-        const response = await api.post(`/pet`, formData)
-        return (response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+async function addPet(newPet) {
+  const formData = new FormData();
+  formData.append("name", newPet.name);
+  formData.append("type", newPet.type);
+  formData.append("adoptionStatus", newPet.adoptionStatus);
+  formData.append("weight", newPet.weight);
+  formData.append("height", newPet.height);
+  formData.append("color", newPet.color);
+  formData.append("bio", newPet.bio);
+  formData.append("breed", newPet.breed);
+  formData.append("hypoallergenic", newPet.hypoallergenic);
+  formData.append("petDietary", newPet.petDietary);
+  formData.append("image", newPet.image, newPet.image.name);
+  try {
+    const response = await api.post(`/pet`, formData)
+    return (response.data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function updateUserDetails(detailsToUpdate) {
+  try {
+    const response = await api.put('/user/:id', detailsToUpdate )
+    return(response.data)
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 
-export {login, signup, getPets, getPetById, getUserPetsById, savePet, deleteSavedPet, adoptOrFosterPet, returnPet, addPet}
+
+export {login, signup, getPets, getPetById, getUserPetsById, savePet, deleteSavedPet, adoptOrFosterPet, returnPet, addPet, updateUserDetails}

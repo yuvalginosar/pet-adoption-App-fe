@@ -7,7 +7,7 @@ import useAuth from "../hooks/useAuth";
 
 
 function PetsNavbar(props) {
-  const { activeUser, onLogout } = useAuth();
+  const { activeUser, handleLogout } = useAuth();
 
     return (
         <Navbar bg="light" expand="lg">
@@ -31,6 +31,9 @@ function PetsNavbar(props) {
                   </Nav.Link>
                   <Nav.Link to="/addPet" as={NavLink}>
                   Add Pet
+                  </Nav.Link>
+                  <Nav.Link className="mx-5" to="/" as={NavLink} onClick={handleLogout} >
+                  logout
                   </Nav.Link>
                 </>
               )}

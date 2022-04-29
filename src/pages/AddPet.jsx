@@ -54,8 +54,8 @@ function AddPet(props) {
             petDietary,
             image: fileImgRef.current.files[0]
         })
-    }
         navigate('/');
+    }
         console.log(adoptionStatus)
     return (
         <Container> 

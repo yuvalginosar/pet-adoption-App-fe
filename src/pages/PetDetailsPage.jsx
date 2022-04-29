@@ -10,7 +10,6 @@ function PetDetailsPage(props) {
     const [pet, setPet] = useState('');
     const [isSaved, setIsSaved] = useState(false)
     const id = useParams();
-    console.log(id)
     const { activeUser } = useAuth();
     const [petStatus, setPetStatus] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -52,13 +51,11 @@ function PetDetailsPage(props) {
         const petId = id.id
         const userId = activeUser.id
         const res = await adoptOrFosterPet(petId, userId, action, curPetStatus)
-        console.log(res)
         if (action === 'foster') setUserAction("fostering")
         if (action === 'adopt') setUserAction("adopting")
         setIsLoading(false)
         handleShow()
     }
-    console.log(pet)
 
 
     async function handleReturnPet() {
@@ -74,7 +71,6 @@ function PetDetailsPage(props) {
    
     return (
         <Container>
-            {console.log(userAction)}
             {userAction && <PetModal name={pet.name} action={userAction} show={show} handleClose={handleClose}/>}
            {pet && <Card className="my-3">
             {/* <Row> */}
@@ -113,7 +109,7 @@ function PetDetailsPage(props) {
                         <p>Weight: {pet.weight}Kg</p>
                         <p>Color: {pet.color}</p>
                         <p>Bio: {pet.bio}</p>
-                        {/* <p>Dietary: {JSON.parse(pet.dietary_restrictions).join()}</p> */}
+                        {pet.dietary_restrictions ? <p>Dietary: {JSON.parse(pet.dietary_restrictions).join()} </p> : <p>Dietary: no restrictions </p>}
                         <p>Hypoallergnic: {pet.hypoallergenic ? 'yes' : 'no'}</p>
                         {/* <p>Dietery: {pet.dietery.join(', ')}</p> */}
                         <p>Breed: {pet.breed}</p>
@@ -121,7 +117,8 @@ function PetDetailsPage(props) {
                 </Card.Body>
                 {/* </Col>
             </Row> */}
-                {(pet.adoption_status === "Available" && (petStatus === null || petStatus === "save")) && <div className='mb-2 align'>
+                {(pet.adoption_status === "Available" && (petStatus === null || petStatus === "save")) && 
+                <div className='mb-2 align'>
                     <Button 
                         variant="success" 
                         size="sm"
