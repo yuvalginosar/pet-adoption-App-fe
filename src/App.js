@@ -14,8 +14,9 @@ import PetDetailsPage from "./pages/PetDetailsPage";
 import SearchBar from "./components/SearchBar";
 import LoginPage from "./components/LoginPage";
 import AddPet from "./pages/AddPet";
+import Dashboard from "./pages/Dashboard";
 // import SignUp from "./components/SignUp";
-
+import UserDetailedPage from "./pages/UserDetailedPage";
 
 function App() {
   const pets = ['dog1', 'dog2', 'dog3', 'cat1', 'cat2']
@@ -34,8 +35,11 @@ function App() {
               <Route index element={ <ProtectedRoutes> <Pets /> </ProtectedRoutes>} />
               <Route path=":id" element={<ProtectedRoutes> <PetDetailsPage /> </ProtectedRoutes>} />
             </Route>
+            <Route path = 'Dashboard'>
+              <Route index element={<Dashboard />}></Route>
+              <Route path="user/:id" element={<UserDetailedPage />} />
+            </Route>
           </Route>
-
         </Routes>
       </petsContext.Provider> 
     </AuthProvider>

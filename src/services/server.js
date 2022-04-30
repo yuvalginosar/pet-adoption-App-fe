@@ -128,7 +128,23 @@ async function updateUserDetails(detailsToUpdate) {
     console.error(err)
   }
 }
+async function getUsers() {
+  try {
+    const response = await api.get('/user')
+    return(response.data)
+  } catch (err) {
+    console.error(err)
+  }
+}
 
+async function getUserFullById(id) {
+  try {
+    const response = await api.get(`/user/${id}/full`)
+    console.log(response)
+    return(response.data)
+  } catch (err) {
+    console.error(err)
+  }
+}
 
-
-export {login, signup, getPets, getPetById, getUserPetsById, savePet, deleteSavedPet, adoptOrFosterPet, returnPet, addPet, updateUserDetails}
+export {login, signup, getPets, getPetById, getUserPetsById, savePet, deleteSavedPet, adoptOrFosterPet, returnPet, addPet, updateUserDetails, getUsers, getUserFullById}
