@@ -27,7 +27,7 @@ function Dashboard(props) {
             <div className='users-list'>
                 <ListGroup>
                     {users.map((user) => (
-                        <ListGroup.Item key={user.id} onClick={() => navigate(`/Dashboard/user/${user.id}`)} >
+                        <ListGroup.Item key={user.id} onClick={() => navigate(`/admin/user/${user.id}`)} >
                                 {user.first_name + ' ' + user.last_name + ' email: ' + user.email } 
                         </ListGroup.Item>
                     ))}
@@ -38,7 +38,7 @@ function Dashboard(props) {
             <div className='Pets-list'>
                 <ListGroup>
                     {pets.map((pet) => (
-                        <ListGroup.Item key={pet.id} >
+                        <ListGroup.Item key={pet.id} onClick={() => navigate(`/admin/editpet/${pet.id}`)}>
                                 {pet.name + ' ' + pet.adoption_status } 
                         </ListGroup.Item>
                     ))}

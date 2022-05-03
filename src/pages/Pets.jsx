@@ -59,9 +59,8 @@ function Pets(props) {
 
             <Row xs={1} md={2} className="g-4">
             {usersPets.map((pet) => (
-                <Col>
+                <Col key={pet.id}>
                     <PetCard
-                        key={pet.id}
                         pet={pet}
                         />
                 </Col>

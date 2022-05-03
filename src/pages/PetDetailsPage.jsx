@@ -104,6 +104,7 @@ function PetDetailsPage(props) {
                 }
                     </Card.Title>
                     <Card.Text>
+                        <p>Type of pet: {pet.type}</p>
                         <p>Adoption status: {pet.adoption_status}</p>
                         <p>Height: {pet.height}cm</p>
                         <p>Weight: {pet.weight}Kg</p>

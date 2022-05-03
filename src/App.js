@@ -17,13 +17,14 @@ import AddPet from "./pages/AddPet";
 import Dashboard from "./pages/Dashboard";
 // import SignUp from "./components/SignUp";
 import UserDetailedPage from "./pages/UserDetailedPage";
+import EditPet from "./pages/EditPet";
+import AdminProtected from "./components/AdminProtected";
 
 function App() {
-  const pets = ['dog1', 'dog2', 'dog3', 'cat1', 'cat2']
 
   return (
     <AuthProvider>
-      <petsContext.Provider value={{pets}}>
+      {/* <petsContext.Provider value={{pets}}> */}
         <PetsNavbar />
         <Routes>
           <Route path= '/'> 
@@ -35,13 +36,14 @@ function App() {
               <Route index element={ <ProtectedRoutes> <Pets /> </ProtectedRoutes>} />
               <Route path=":id" element={<ProtectedRoutes> <PetDetailsPage /> </ProtectedRoutes>} />
             </Route>
-            <Route path = 'Dashboard'>
-              <Route index element={<Dashboard />}></Route>
-              <Route path="user/:id" element={<UserDetailedPage />} />
+            <Route path = 'admin'>
+              <Route index element={<AdminProtected><Dashboard /></AdminProtected>}></Route>
+              <Route path="user/:id" element={<AdminProtected><UserDetailedPage /></AdminProtected>} />
+              <Route path="editpet/:id" element={<AdminProtected><EditPet /></AdminProtected>} />
             </Route>
           </Route>
         </Routes>
-      </petsContext.Provider> 
+      {/* </petsContext.Provider>  */}
     </AuthProvider>
   );
 }
