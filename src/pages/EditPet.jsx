@@ -1,11 +1,11 @@
 import React, { useState, Component, useRef, useEffect } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { addPet } from "../services/server";
-import { Button, Form, Container } from "react-bootstrap";
+import { Button, Form, Container, Image } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPetById, updatePetDetails } from "../services/server.js";
+import "../components/forms.css";
 
 function EditPet(props) {
   const navigate = useNavigate();
@@ -55,10 +55,14 @@ function EditPet(props) {
     if (petDietary.length > 0) petDetails["dietary_restrictions"] = petDietary;
     if (fileImgRef.current.files[0])
       petDetails["image"] = fileImgRef.current.files[0];
-
-    const response = await updatePetDetails(petDetails, id.id);
-    console.log(response);
-    navigate("/admin");
+    try {
+      const response = await updatePetDetails(petDetails, id.id);
+      navigate("/admin");
+    } catch (err) {
+      alert(err);
+      console.log(err);
+      navigate("/admin");
+    }
   }
 
   const Dietaryoptions = [
@@ -73,13 +77,11 @@ function EditPet(props) {
   const animatedComponents = makeAnimated();
 
   return (
-    <Container>
-      <h3>Edit {pet.name} details</h3>
-      <Form>
+    <Container className="p-container">
+      <h4 className="my-3 headline">Edit {pet.name} details</h4>
+      <Form className="c-form">
         <Form.Label className="my-3">Is it a dog or a cat?</Form.Label>
-        <Form.Select
-          onChange={(e) => setType(e.target.value)}
-        >
+        <Form.Select onChange={(e) => setType(e.target.value)}>
           <option> {pet.type}</option>
           <option value="dog">dog</option>
           <option value="cat">cat</option>
@@ -95,7 +97,16 @@ function EditPet(props) {
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 
-        <Form.Label className="my-3">Upload pets picture</Form.Label>
+        <Form.Label className="my-3">
+          
+          <Image
+            src={pet.picture}
+            width={100}
+            height={100}
+            rounded={true}
+          >
+          </Image>
+        </Form.Label>
         <Form.Group controlId="formFile">
           <Form.Control ref={fileImgRef} type="file" accept="image/*" />
         </Form.Group>
@@ -152,7 +163,7 @@ function EditPet(props) {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>breed of the pet</Form.Label>
+          <Form.Label>Breed</Form.Label>
           <Form.Control
             type="text"
             value={breed}
@@ -182,15 +193,15 @@ function EditPet(props) {
           <option value={true}> yes</option>
           <option value={false}>no</option>
         </Form.Select>
+        <Button
+          className="my-3"
+          variant="secondary"
+          onClick={onAddPet}
+          style={{ width: "100%", hover: "pointer" }}
+        >
+          Edit
+        </Button>
       </Form>
-      <Button
-        className="my-3"
-        variant="secondary"
-        onClick={onAddPet}
-        style={{ width: "100%", hover: "pointer" }}
-      >
-        Edit
-      </Button>
     </Container>
   );
 }

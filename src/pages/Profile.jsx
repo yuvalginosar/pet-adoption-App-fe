@@ -31,6 +31,7 @@ function Profile(props) {
                     <Form.Group className="mb-3" >
                         <Form.Label>First Name</Form.Label>
                         <Form.Control type="text" 
+                        placeholder={activeUser.first_name}
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
@@ -39,6 +40,7 @@ function Profile(props) {
                     <Form.Group className="mb-3" >
                         <Form.Label>Family Name</Form.Label>
                         <Form.Control type="text" 
+                        placeholder={activeUser.last_name}
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                         />
@@ -47,6 +49,7 @@ function Profile(props) {
                     <Form.Group className="mb-3" >
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" 
+                        placeholder={activeUser.email}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -55,6 +58,7 @@ function Profile(props) {
                     <Form.Group className="mb-3" >
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control type="text" 
+                        placeholder={activeUser.phone}
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         />
@@ -71,7 +75,7 @@ function Profile(props) {
                     <FloatingLabel className='form-control' controlId="floatingTextarea2" >
                         <Form.Control
                         as="textarea"
-                        placeholder="..."
+                        placeholder={activeUser.bio}
                         style={{ height: '100px' }}
                         className='textarea'
                         onChange={(e) => setUserBio(e.target.value)}

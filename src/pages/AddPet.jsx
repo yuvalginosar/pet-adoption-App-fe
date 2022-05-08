@@ -1,5 +1,5 @@
 import React, { useState, Component, useRef  } from 'react';
-
+import '../components/forms.css'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import { addPet } from '../services/server';
@@ -73,9 +73,9 @@ function AddPet(props) {
     }
 
     return (
-        <Container> 
-            <h1>Add a new pet</h1>
-            <Form>
+        <Container className="p-container"> 
+            <h4 className='my-3 headline'>Add a new pet</h4>
+            <Form className='c-form'>
             <Form.Label className='my-3'>Is it a dog or a cat?</Form.Label>
                 <Form.Select 
                   onChange={(e) => setValues(setType, e.target.value, "type")}

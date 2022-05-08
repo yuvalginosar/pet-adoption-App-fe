@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import './navbar.css'
 
 function PetsNavbar(props) {
   const { activeUser, handleLogout } = useAuth();
@@ -11,23 +12,20 @@ function PetsNavbar(props) {
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
             {activeUser && (
-              <>
+          <Nav className="c-nav-user">
+                <>
                 <Nav.Link to="/" as={NavLink}>
-                  Home
-                </Nav.Link>
-                <Nav.Link to="/Profile" as={NavLink}>
-                  Profile
-                </Nav.Link>
-                <Nav.Link to="/Pets" as={NavLink}>
-                  Pets
-                </Nav.Link>
-                <Nav.Link to="/SearchBar" as={NavLink}>
                   Search
                 </Nav.Link>
+                <Nav.Link to="/Pets" as={NavLink}>
+                  MyPets
+                </Nav.Link>
+               
+                <Nav.Link to="/Profile" as={NavLink}>
+                  {activeUser.first_name}
+                </Nav.Link>
                 <Nav.Link
-                  className="mx-5"
                   to="/"
                   as={NavLink}
                   onClick={handleLogout}
@@ -35,9 +33,10 @@ function PetsNavbar(props) {
                   logout
                 </Nav.Link>
               </>
+            </Nav>
             )}
-            <Nav className="ms-auto">
               {activeUser && activeUser.is_admin && (
+            <Nav >
                 <>
                   {" "}
                   <Nav.Link to="/addPet" as={NavLink}>
@@ -47,9 +46,8 @@ function PetsNavbar(props) {
                     admin Dashboard
                   </Nav.Link>
                 </>
-              )}
-            </Nav>
           </Nav>
+              )}
           <Nav className="ms-auto">
             {!activeUser && (
               <Nav.Link to="/" as={NavLink}>

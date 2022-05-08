@@ -1,0 +1,22 @@
+.p-container {
+  padding: 2%;
+  /* width: 90%; */
+  margin: auto;
+  border: 1px solid darkgray;
+}
+
+.c-list{
+  width: 80%;
+  margin: auto;
+  cursor: pointer;
+  -webkit-box-shadow: 1px 4px 13px -1px rgba(0, 0, 0, 0.34);
+  box-shadow: 1px 4px 13px -1px rgba(0, 0, 0, 0.34);
+  height: 300px;
+  overflow-y: scroll;
+}
+
+ 
+
+.headline {
+  margin-left: 10%;
+}

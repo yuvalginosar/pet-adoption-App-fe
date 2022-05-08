@@ -9,3 +9,8 @@
     width: 100%;
     z-index: 1;
   }
+  .aligned {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }

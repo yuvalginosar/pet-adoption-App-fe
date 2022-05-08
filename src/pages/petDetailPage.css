@@ -1,10 +1,25 @@
+
 .align {
     display: flex;
-    justify-content: space-around;
-    width: 60%;
-    margin: auto;
+    justify-content: end;
+    margin-right: 1rem;
 }
 
-.btn1 {
-    width: 30%;
+.c-bold {
+    font-weight: bold;
+}
+
+.one-line {
+    width: 70%;
+    margin: 3rem;
+    /* padding: 5%; */
+    display: flex;
+    justify-content: space-around;
+}
+.card-title {
+    margin: 3%;
+}
+.clickable :hover {
+    cursor: pointer;
+    color: blue;
 }

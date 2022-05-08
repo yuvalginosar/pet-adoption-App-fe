@@ -1,166 +1,168 @@
-import axios from 'axios';
+import axios from "axios";
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: "http://localhost:8080",
   withCredentials: true,
 });
 
-
 async function login(email, password) {
-    try {
-      const response = await api.post('/login', { email, password });
-      console.log(response)
-      return response.data.user;
-    } catch (err) {
-      alert(err)
-      console.log(err);
-      throw new Error(err)
-    }
+  const response = await api.post("/login", { email, password });
+  console.log(response);
+  return response.data.user;
 }
-
+async function logout() {
+  const response = await api.get("/user/logout");
+  console.log(response);
+}
 async function signup(newUser) {
-  try {
-    const response = await api.post('/signup', newUser);
-    return response.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await api.post("/signup", newUser);
+  return response.data;
 }
 
-async function getPets(adoptionStatus='', type='', height='', weight='', name='') {
-  let queryString = ''
-  if (adoptionStatus.length  > 0) queryString += `adoption_status=${adoptionStatus}`
-  if (type.length  > 0) queryString += `&type=${type}`
-  if (height.length  > 0) queryString += `&height=${height}`
-  if (weight.length  > 0) queryString += `&weight=${weight}`
-  if (name.length  > 0) queryString += `&name=${name}`
+async function getPets(
+  adoptionStatus = "",
+  type = "",
+  height = "",
+  weight = "",
+  name = ""
+) {
+  let queryString = "";
+  if (adoptionStatus.length > 0)
+    queryString += `adoption_status=${adoptionStatus}`;
+  if (type.length > 0) queryString += `&type=${type}`;
+  if (height.length > 0) queryString += `&height=${height}`;
+  if (weight.length > 0) queryString += `&weight=${weight}`;
+  if (name.length > 0) queryString += `&name=${name}`;
 
-  try {
-    const response = await api.get(`/pet?${queryString}`);
-    console.log(response)
-    return (response.data);
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await api.get(`/pet?${queryString}`);
+  console.log(response);
+  return response.data;
 }
 async function getPetById(id) {
-  try {
-    const response = await api.get(`/pet/${id}`);
-    console.log(response)
-    return (response.data[0]);
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await api.get(`/pet/${id}`);
+  console.log(response);
+  return response.data[0];
 }
 
 async function getUserPetsById(id) {
-  try {
-    const response = await api.get(`/pet/user/${id}`);
-    console.log(response)
-    return (response.data);
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await api.get(`/pet/user/${id}`);
+  console.log(response);
+  return response.data;
 }
 
-async function savePet(petId, userId){
-try {
-  const response = await api.post(`/pet/${petId}/save`, {id: userId})
-  console.log(response)
-  return (response.data);
-} catch (err) {
-  console.log(err);
-}
+async function savePet(petId, userId) {
+  const response = await api.post(`/pet/${petId}/save`, { id: userId });
+  console.log(response);
+  return response.data;
 }
 
-async function deleteSavedPet(petId, userId){
-  try {
-    const response = await api.delete(`/pet/${petId}/save`, { data: {id: userId}})
-    return (response);
-  } catch (err) {
-    console.log(err);
-  }
-  }
+async function deleteSavedPet(petId, userId) {
+  const response = await api.delete(`/pet/${petId}/save`, {
+    data: { id: userId },
+  });
+  return response;
+}
 
-  async function adoptOrFosterPet(petId, userId, action, curPetStatus){
-    try {
-      const response = await api.post(`/pet/${petId}/adopt`, {id: userId, type: action, curPetStatus: curPetStatus})
-      return (response.data);
-    } catch (err) {
-      console.log(err);
-    }
-    }
+async function adoptOrFosterPet(petId, userId, action, curPetStatus) {
+  const response = await api.post(`/pet/${petId}/adopt`, {
+    id: userId,
+    type: action,
+    curPetStatus: curPetStatus,
+  });
+  return response.data;
+}
 
-    async function returnPet(petId, userId){
-      try {
-        const response = await api.post(`/pet/${petId}/return`, {id: userId})
-        return (response.data);
-      } catch (err) {
-        console.log(err);
-      }
-      }
+async function returnPet(petId, userId) {
+  const response = await api.post(`/pet/${petId}/return`, { id: userId });
+  return response.data;
+}
 
 async function addPet(newPet) {
   const formData = new FormData();
-  for(let [key, value] of Object.entries(newPet)) {
-    if (key === 'image') {
-      formData.append(`${key}`, value, value.name)
+  for (let [key, value] of Object.entries(newPet)) {
+    if (key === "image") {
+      formData.append(`${key}`, value, value.name);
+    } else {
+      formData.append(`${key}`, value);
     }
-    else {formData.append(`${key}`, value)}
   }
-  try {
-    const response = await api.post(`/pet`, formData)
-    return (response.data);
-  } catch (err) {
-    console.log(err);
-  }
+
+  const response = await api.post(`/pet`, formData);
+  return response.data;
 }
 
 async function updateUserDetails(detailsToUpdate) {
-  
-  try {
-    const response = await api.put('/user/:id', detailsToUpdate )
-    return(response.data)
-  } catch (err) {
-    console.error(err)
-  }
+  const response = await api.put("/user/:id", detailsToUpdate);
+  return response.data;
 }
 
 async function updatePetDetails(detailsToUpdate, id) {
-  console.log(detailsToUpdate)
+  console.log(detailsToUpdate);
   const formData = new FormData();
-  for(let [key, value] of Object.entries(detailsToUpdate)) {
-    if (key === 'image') {
-      formData.append(`${key}`, value, value.name)
+  for (let [key, value] of Object.entries(detailsToUpdate)) {
+    if (key === "image") {
+      formData.append(`${key}`, value, value.name);
+    } else {
+      formData.append(`${key}`, value);
     }
-    else {formData.append(`${key}`, value)}
   }
   try {
-  //   for (var value of formData.values()) {
-  //     console.log(typeof(value));
-  //  }
-    const response = await api.put(`/pet/${id}`, formData )
-    return(response.data)
+    const response = await api.put(`/pet/${id}`, formData);
+    return response.data;
   } catch (err) {
-    console.error(err)
+    alert(err);
+    console.log(err);
+    throw new Error(err);
   }
 }
 async function getUsers() {
   try {
-    const response = await api.get('/user')
-    return(response.data)
+    const response = await api.get("/user");
+    return response.data;
   } catch (err) {
-    console.error(err)
+    alert(err);
+    console.log(err);
+    throw new Error(err);
   }
 }
 
 async function getUserFullById(id) {
   try {
-    const response = await api.get(`/user/${id}/full`)
-    console.log(response)
-    return(response.data)
+    const response = await api.get(`/user/${id}/full`);
+    console.log(response);
+    return response.data;
   } catch (err) {
-    console.error(err)
+    alert(err);
+    console.log(err);
+    throw new Error(err);
+  }
+}
+async function getStatusByIds(petid, userid) {
+  try {
+    const response = await api.get(`/pet/${petid}/user/${userid}`);
+    console.log(response, "getStatusByIds");
+    return response.data;
+  } catch (err) {
+    alert(err);
+    console.log(err);
+    throw new Error(err);
   }
 }
 
-export {login, signup, getPets, getPetById, getUserPetsById, savePet, deleteSavedPet, adoptOrFosterPet, returnPet, addPet, updateUserDetails, getUsers, getUserFullById, updatePetDetails}
+export {
+  login,
+  signup,
+  getPets,
+  getPetById,
+  getUserPetsById,
+  savePet,
+  deleteSavedPet,
+  adoptOrFosterPet,
+  returnPet,
+  addPet,
+  updateUserDetails,
+  getUsers,
+  getUserFullById,
+  updatePetDetails,
+  getStatusByIds,
+  logout,
+};

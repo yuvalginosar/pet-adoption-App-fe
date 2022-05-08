@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Modal, Alert } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth';
 function SignUp(props) {
-    const {showSignUp, handleCloseSignUp} = props
+    const {showSignUp, handleCloseSignUp, handleShowLogIn} = props
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [ConfirmPwd, setConfirmPwd] = useState("");
@@ -19,6 +19,7 @@ function SignUp(props) {
         // if (pwd !== ConfirmPwd) setIsPwdMatch(false)
         handleSignUp ({firstName,lastName, email, pwd, phoneNumber, ConfirmPwd})
         handleCloseSignUp()
+        handleShowLogIn()
     }
 
     return (

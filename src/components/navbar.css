@@ -1,0 +1,5 @@
+.c-nav-user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
