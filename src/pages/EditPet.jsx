@@ -195,7 +195,7 @@ function EditPet(props) {
         </Form.Select>
         <Button
           className="my-3"
-          variant="secondary"
+          variant="outline-secondary"
           onClick={onAddPet}
           style={{ width: "100%", hover: "pointer" }}
         >

@@ -6,12 +6,10 @@ const api = axios.create({
 
 async function login(email, password) {
   const response = await api.post("/login", { email, password });
-  console.log(response);
   return response.data.user;
 }
 async function logout() {
   const response = await api.get("/user/logout");
-  console.log(response);
 }
 async function signup(newUser) {
   const response = await api.post("/signup", newUser);
@@ -34,24 +32,20 @@ async function getPets(
   if (name.length > 0) queryString += `&name=${name}`;
 
   const response = await api.get(`/pet?${queryString}`);
-  console.log(response);
   return response.data;
 }
 async function getPetById(id) {
   const response = await api.get(`/pet/${id}`);
-  console.log(response);
   return response.data[0];
 }
 
 async function getUserPetsById(id) {
   const response = await api.get(`/pet/user/${id}`);
-  console.log(response);
   return response.data;
 }
 
 async function savePet(petId, userId) {
   const response = await api.post(`/pet/${petId}/save`, { id: userId });
-  console.log(response);
   return response.data;
 }
 
@@ -96,7 +90,6 @@ async function updateUserDetails(detailsToUpdate) {
 }
 
 async function updatePetDetails(detailsToUpdate, id) {
-  console.log(detailsToUpdate);
   const formData = new FormData();
   for (let [key, value] of Object.entries(detailsToUpdate)) {
     if (key === "image") {
@@ -105,47 +98,21 @@ async function updatePetDetails(detailsToUpdate, id) {
       formData.append(`${key}`, value);
     }
   }
-  try {
     const response = await api.put(`/pet/${id}`, formData);
     return response.data;
-  } catch (err) {
-    alert(err);
-    console.log(err);
-    throw new Error(err);
-  }
 }
 async function getUsers() {
-  try {
     const response = await api.get("/user");
     return response.data;
-  } catch (err) {
-    alert(err);
-    console.log(err);
-    throw new Error(err);
-  }
 }
 
 async function getUserFullById(id) {
-  try {
     const response = await api.get(`/user/${id}/full`);
-    console.log(response);
     return response.data;
-  } catch (err) {
-    alert(err);
-    console.log(err);
-    throw new Error(err);
-  }
 }
 async function getStatusByIds(petid, userid) {
-  try {
     const response = await api.get(`/pet/${petid}/user/${userid}`);
-    console.log(response, "getStatusByIds");
     return response.data;
-  } catch (err) {
-    alert(err);
-    console.log(err);
-    throw new Error(err);
-  }
 }
 
 export {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Container, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import {
@@ -12,7 +12,9 @@ import {
 } from "../services/server.js";
 import "./petDetailPage.css";
 import PetModal from "../components/PetModal";
-import { Star, StarFill, BookmarkHeart, BookmarkHeartFill } from 'react-bootstrap-icons';
+import { BookmarkHeart, BookmarkHeartFill } from "react-bootstrap-icons";
+import { faDog, faCat } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PetDetailsPage(props) {
   const [pet, setPet] = useState("");
@@ -26,18 +28,16 @@ function PetDetailsPage(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchPets() {
       try {
-        console.log(activeUser);
         const [curPet, petStatusForUser] = await Promise.all([
           getPetById(id.id),
           getStatusByIds(id.id, activeUser.id),
         ]);
         setPet(curPet);
-        console.log(petStatusForUser.length);
-        if (petStatusForUser.length === 0) setPetStatus(null);
-        else setPetStatus(petStatusForUser[0].status);
+        currentPetStatus(petStatusForUser)
       } catch (err) {
         alert(err);
         console.log(err);
@@ -47,8 +47,12 @@ function PetDetailsPage(props) {
   }, [isSaved, isLoading]);
 
   function currentPetStatus(array) {
-    if (array.length === 0) setPetStatus(null);
-    else setPetStatus(array[0].status);
+    if (array.length === 0){
+        setPetStatus(null);  
+    } 
+    else {
+        setPetStatus(array[0].status);
+    }
   }
 
   async function handleSavePet() {
@@ -83,7 +87,6 @@ function PetDetailsPage(props) {
     const curPetStatus = petStatus;
     const petId = id.id;
     const userId = activeUser.id;
-    console.log(action);
     try {
       const res = await adoptOrFosterPet(petId, userId, action, curPetStatus);
       if (action === "foster") setUserAction("fostering");
@@ -111,10 +114,11 @@ function PetDetailsPage(props) {
       console.log(err);
     }
   }
+  const dogIcon = <FontAwesomeIcon icon={faDog} />;
+  const catIcon = <FontAwesomeIcon icon={faCat} />;
 
   return (
     <Container className="p-container">
-      {console.log(pet, petStatus)}
       {userAction && (
         <PetModal
           name={pet.name}
@@ -125,8 +129,6 @@ function PetDetailsPage(props) {
       )}
       {pet && (
         <Card className="my-3 c-card">
-          {/* <Row> */}
-          {/* <Col md={3}> */}
           {pet.picture ? (
             <Card.Img
               variant="top"
@@ -137,77 +139,61 @@ function PetDetailsPage(props) {
           ) : (
             <p className="ms-1">no available img</p>
           )}
-
-          {/* </Col>
-                <Col md={9}> */}
           <Card.Body>
             <Card.Title className="card-title">
+              {pet.type === "dog" ? (
+                <span>{dogIcon}</span>
+              ) : (
+                <span>{catIcon}</span>
+              )}{" "}
               {pet.name}, {pet.adoption_status}
               {pet.adoption_status !== "Adopted" && petStatus === null && (
-                  // <FontAwesomeIcon icon={faStar} onClick={handleSavePet}></FontAwesomeIcon>
-                  // <FontAwesomeIcon icon={["fal", "faStar}/>
-                  
-                  <BookmarkHeart className="mx-3 clickable"
+                <BookmarkHeart
+                  className="mx-3 clickable"
                   onClick={handleSavePet}
-                  
-                  ></BookmarkHeart>
-                // <Button
-                //   className="mx-5 btn1"
-                //   variant="info"
-                //   size="sm"
-                //   type="button"
-                //   onClick={handleSavePet}
-                // >
-                //   Add to My Pets
-                // </Button>
+                  size={25}
+                ></BookmarkHeart>
               )}
               {petStatus === "save" && (
-                //  <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
-                //  <FontAwesomeIcon icon={["fal", "faStar"]}/>
-                <BookmarkHeartFill className="mx-3 clickable"
-                onClick={handleDeleteSavedPet}
-
-                >
-
-                </BookmarkHeartFill>
-                // <Button
-                //   className="mx-5 btn1"
-                //   variant="info"
-                //   size="sm"
-                //   type="button"
-                //   onClick={handleDeleteSavedPet}
-                // >
-                //   Remove from my pets
-                // </Button>
+                <BookmarkHeartFill
+                  className="mx-3 clickable"
+                  onClick={handleDeleteSavedPet}
+                  size={25}
+                ></BookmarkHeartFill>
               )}
             </Card.Title>
-            <div className="one-line">  <div> <Card.Text className="c-bold">General characteristic</Card.Text>
-            <Card.Text>Type of pet: {pet.type}</Card.Text>
-            <Card.Text>Breed: {pet.breed}</Card.Text>
-            <Card.Text>Height: {pet.height}cm</Card.Text>
-            <Card.Text>Weight: {pet.weight}Kg</Card.Text>
-            <Card.Text>Color: {pet.color}</Card.Text>
+            <div className="one-line">
+              {" "}
+              <div>
+                {" "}
+                <Card.Text className="c-bold">General Characteristic</Card.Text>
+                <Card.Text>Breed: {pet.breed}</Card.Text>
+                <Card.Text>Height: {pet.height}cm</Card.Text>
+                <Card.Text>Weight: {pet.weight}Kg</Card.Text>
+                <Card.Text>Color: {pet.color}</Card.Text>
+              </div>
+              <div className="mt-5">
+                {" "}
+                <Card.Text className="c-bold">Aditional Information</Card.Text>
+                <Card.Text>Bio: {pet.bio}</Card.Text>
+                {pet.dietary_restrictions ? (
+                  <Card.Text>
+                    Dietary: {JSON.parse(pet.dietary_restrictions).join()}
+                  </Card.Text>
+                ) : (
+                  <Card.Text>Dietary: no restrictions</Card.Text>
+                )}
+                <Card.Text>
+                  Hypoallergnic: {pet.hypoallergenic ? "yes" : "no"}
+                </Card.Text>
+              </div>
             </div>
-            <div> <Card.Text className="c-bold">Aditional information</Card.Text>
-            <Card.Text>Bio: {pet.bio}</Card.Text>
-            {pet.dietary_restrictions ? (
-              <Card.Text>
-                Dietary: {JSON.parse(pet.dietary_restrictions).join()}
-              </Card.Text>
-            ) : (
-              <Card.Text>Dietary: no restrictions</Card.Text>
-            )}
-            <Card.Text>
-              Hypoallergnic: {pet.hypoallergenic ? "yes" : "no"}
-            </Card.Text></div></div>
           </Card.Body>
-          {/* </Col>
-            </Row> */}
           {pet.adoption_status === "Available" &&
             (petStatus === null || petStatus === "save") && (
               <div className="mb-2 align">
                 <Button
-                  variant="success"
+                  variant="outline-success"
                   size="sm"
                   type="button"
                   onClick={() => handleAdoptOrFosterPet("adopt")}
@@ -216,7 +202,7 @@ function PetDetailsPage(props) {
                 </Button>{" "}
                 <Button
                   className="mx-2"
-                  variant="success"
+                  variant="outline-success"
                   size="sm"
                   type="button"
                   onClick={() => handleAdoptOrFosterPet("foster")}
@@ -239,7 +225,7 @@ function PetDetailsPage(props) {
               <div className="mb-2">
                 <Button
                   className="mx-2"
-                  variant="success"
+                  variant="outline-success"
                   size="sm"
                   type="button"
                   onClick={() => handleAdoptOrFosterPet("adopt")}
@@ -253,7 +239,7 @@ function PetDetailsPage(props) {
                 petStatus === "foster")) && (
               <div className="mb-2">
                 <Button
-                  variant="secondary"
+                  variant="outline-secondary"
                   size="sm"
                   type="button"
                   onClick={() => handleReturnPet()}

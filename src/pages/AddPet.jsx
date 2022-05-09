@@ -208,7 +208,7 @@ function AddPet(props) {
 
 
                 <Button className='my-3'
-                    variant="secondary" 
+                    variant="outline-secondary" 
                     onClick={onAddPet}
                     style={{width: "100%", hover: "pointer"}}
                     >

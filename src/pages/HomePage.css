@@ -1,5 +1,8 @@
-.container {
-    margin: 0 2rem;
+.header {
+    /* margin-left: 10%;
+    margin-right: 10%; */
+    width: 80%;
+    margin: auto;
 }
 
 .page-btn {

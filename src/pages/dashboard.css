@@ -20,3 +20,10 @@
 .headline {
   margin-left: 10%;
 }
+.headline :hover {
+    cursor: pointer;
+  }
+
+  .c-add {
+      margin-right: 10%;
+  }

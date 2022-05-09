@@ -1,5 +1,13 @@
-.c-nav-user {
+.c-nav {
+    width: 100vw;
+}
+.split-nav {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    width: 100%;
+    justify-content: space-between;
+    margin-right: 20%;
+}
+
+.flexed {
+    display: flex;
 }

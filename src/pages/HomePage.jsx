@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Button, Container, Modal, Form, ButtonGroup } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Button, Container } from "react-bootstrap";
 import "./HomePage.css";
 import LoginPage from "../components/LoginPage";
 import SignUp from "../components/SignUp";
 import useAuth from "../hooks/useAuth";
 import SearchBar from "../components/SearchBar";
-
+import { faDog, faCat } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 function HomePage(props) {
   const { activeUser } = useAuth();
-  console.log(activeUser);
   const [showLogIn, setShowLogIn] = useState(false);
   const handleCloseLogIn = () => setShowLogIn(false);
   const handleShowLogIn = () => setShowLogIn(true);
@@ -17,20 +16,25 @@ function HomePage(props) {
   const [showSignUp, setShowSignUp] = useState(false);
   const handleCloseSignUp = () => setShowSignUp(false);
   const handleShowSignUp = () => setShowSignUp(true);
+
+  const dogIcon = <FontAwesomeIcon icon={faDog} />
+  const catIcon = <FontAwesomeIcon icon={faCat} />
   return (
     <Container className="p-container">
-      {activeUser && (
+        <div className="header">
+      {activeUser && 
+      (
+      
         <h2>
-          Welcom {activeUser.first_name} {activeUser.last_name}!
+          Hello {activeUser.first_name} {activeUser.last_name}!
         </h2>
       )}
-      <h2>Bring a new friend to your family!</h2>
-      <h4>
-        Here you can find dogs and cats looking for a home. Adopt a new friend
-        for life or provide a temporary foster home
-      </h4>
+      <h2>Bring a new friend to your life  {dogIcon}{catIcon}</h2>
+      <h5 className="my-2">
+        This is a platform for you to find the perfect match. <p>There are many dogs and cats looking for a home, adopt or provide a temporary foster home</p>
+      </h5>
       {!activeUser && (
-        <div className="my-4">
+        <div className="my-2">
           <LoginPage
             showLogIn={showLogIn}
             handleCloseLogIn={handleCloseLogIn}
@@ -40,10 +44,9 @@ function HomePage(props) {
             handleCloseSignUp={handleCloseSignUp}
             handleShowLogIn={handleShowLogIn}
           />
-          {/* <ButtonGroup vertical className="ml-auto"> */}
           <div className="page-btn"><Button
               className="my-2"
-              variant="secondary"
+              variant="outline-secondary"
               size="sm"
               type="button"
               onClick={handleShowLogIn}
@@ -59,9 +62,10 @@ function HomePage(props) {
               Sign Up
             </Button>{" "}
                 </div>
-          {/* </ButtonGroup> */}
         </div>
+     
       )}
+      </div>
       <SearchBar/>
     </Container>
   );

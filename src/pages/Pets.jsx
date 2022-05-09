@@ -1,28 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Col, Container, Dropdown, Row } from "react-bootstrap";
+import { Col, Container, Dropdown, Nav, Row } from "react-bootstrap";
 import PetCard from "../components/PetCard";
-import petsContext from "../contexts/petsContext";
-import mockPets from "../data/mockPets";
 import useAuth from "../hooks/useAuth";
 import { getPets, getUserPetsById } from "../services/server.js";
 function Pets(props) {
-  // const {pets} = useContext(petsContext)
   const { activeUser } = useAuth();
   const [myPets, setMyPets] = useState(true);
   const [pets, setPets] = useState([]);
-  // const [results, setResults] = useState([]);
-  // const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     async function fetchPets() {
-      const curPets = await getUserPetsById(activeUser.id);
-      // console.log(activeUser.id)
-      console.log(curPets);
-      setPets(curPets);
-      // console.log(pets)
+      try {
+        const curPets = await getUserPetsById(activeUser.id);
+        setPets(curPets);
+      } catch (error) {
+        console.log(error);
+      }
     }
     fetchPets();
-    //   console.log(pets)
   }, [activeUser]);
 
   let usersPets;
@@ -38,21 +33,17 @@ function Pets(props) {
 
   return (
     <Container className="p-container">
-      <Dropdown className="my-2">
-        <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
-          {myPets ? "My Pets" : "Saved Pets"}
-        </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={() => setMyPets(true)}>
-            Show My Pets
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => setMyPets(false)}>
-            Show Saved Pets
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-      {myPets ? <h3 className="my-2">My Pets</h3> : <h3 className="my-2">Saved Pets</h3>}
+      <Nav variant="tabs" defaultActiveKey="/home">
+        <Nav.Item>
+          <Nav.Link onClick={() => setMyPets(true)}> My Pets</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={() => setMyPets(false)}>Saved Pets</Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+    
 
       <Row xs={1} md={2} className="g-4">
         {usersPets.map((pet) => (

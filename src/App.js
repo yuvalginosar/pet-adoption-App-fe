@@ -1,21 +1,16 @@
-import { useState } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AuthProvider from "./components/AuthProvider";
-// import AuthProvider from "./components/AuthProvider";
 import PetsNavbar from "./components/Navbar";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import HomePage from "./pages/HomePage";
 import Pets from "./pages/Pets";
 import Profile from "./pages/Profile";
-import petsContext from "./contexts/petsContext";
 import PetDetailsPage from "./pages/PetDetailsPage";
 import SearchBar from "./components/SearchBar";
-import LoginPage from "./components/LoginPage";
 import AddPet from "./pages/AddPet";
 import Dashboard from "./pages/Dashboard";
-// import SignUp from "./components/SignUp";
 import UserDetailedPage from "./pages/UserDetailedPage";
 import EditPet from "./pages/EditPet";
 import AdminProtected from "./components/AdminProtected";
@@ -37,13 +32,7 @@ function App() {
               </ProtectedRoutes>
             }
           />
-          <Route
-            path="SearchBar"
-            element={
-              
-                <SearchBar />
-            }
-          />
+          <Route path="SearchBar" element={<SearchBar />} />
           <Route
             path="addPet"
             element={

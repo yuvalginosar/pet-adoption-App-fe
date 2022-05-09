@@ -3,8 +3,8 @@ import { Button, Col, Container, Form, ListGroup, Row } from "react-bootstrap";
 import "./SearchBar.css";
 import { getPets } from "../services/server.js";
 import PetCard from "./PetCard";
-
-
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 function SearchBar() {
   const [results, setResults] = useState([]);
   const [isadvanced, setIsAdvanced] = useState(false);
@@ -34,6 +34,7 @@ function SearchBar() {
     console.log(isadvanced);
     setIsAdvanced(!isadvanced);
   }
+  const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} />
 
   return (
     <Container className="my-5">
@@ -102,10 +103,11 @@ function SearchBar() {
         <div className="aligned">
           <Button
             className="my-2 s-btn"
-            variant="secondary"
+            variant="outline-secondary"
             onClick={fetchPets}
+            size="sm"
           >
-            Search
+            {searchIcon} Search
           </Button>
           <Form.Check
             type="switch"

@@ -4,24 +4,28 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import { faDog, faCat } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 function PetCard({pet}) {
   const navigate = useNavigate()
   const { activeUser } = useAuth();
   const renderTooltip = props => (
-    <Tooltip {...props}>login for mor details</Tooltip>
+    <Tooltip {...props}>login for more details</Tooltip>
   );
+  const dogIcon = <FontAwesomeIcon icon={faDog} />
+  const catIcon = <FontAwesomeIcon icon={faCat} />
     return (
         <Card >
 
         {pet.picture ? <Card.Img variant="top" fluid='true' src={pet.picture} width={100} height={250}/> : <p>'no img'</p>}
         <Card.Body>
-          <Card.Title>{pet.name}</Card.Title>
+          <Card.Title>{pet.name} {pet.type ==='dog' ? <span>{dogIcon}</span> : <span>{catIcon}</span>}</Card.Title>
           <Card.Text>
-              <p>adoption status: {pet.adoption_status}</p>
+              <p>Adoption status: {pet.adoption_status}</p>
           </Card.Text>
         </Card.Body>
        {activeUser ? <Button
-          variant="secondary" 
+          variant="outline-info" 
           size="sm"
           onClick={() => navigate(`/Pets/${pet.id}`)}
         >
@@ -31,7 +35,7 @@ function PetCard({pet}) {
         : 
         <OverlayTrigger placement="top" overlay={renderTooltip}>
         <Button
-        variant="secondary" 
+        variant="outline-info" 
         size="sm"
         // disabled ={true}
       >

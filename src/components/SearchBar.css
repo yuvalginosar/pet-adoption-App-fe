@@ -1,14 +1,4 @@
-.c-searchbox {
-    position: relative;
-    width: 60%;
-    margin: auto;
-  }
-  
-  .c-searchbox .result-box {
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-  }
+
   .aligned {
     display: flex;
     justify-content: space-between;

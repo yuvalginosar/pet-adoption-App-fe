@@ -49,7 +49,7 @@ function LoginPage(props) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="primary" 
+                <Button variant="outline-primary" 
                     onClick={handleLogin}>
                     login
                 </Button>
