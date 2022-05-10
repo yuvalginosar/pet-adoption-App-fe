@@ -6,7 +6,7 @@ import "./dashboard.css";
 import { CaretDownFill, CaretRightFill, Plus } from "react-bootstrap-icons";
 import SearchBar from "../components/SearchBar.jsx";
 import useAuth from "../hooks/useAuth";
-
+import errorToDisplay from "../errorHandeling.js";
 function Dashboard(props) {
   const { activeUser, handleLogout } = useAuth();
   const navigate = useNavigate();
@@ -21,8 +21,7 @@ function Dashboard(props) {
         setUsers(curUsers);
         setPets(curPets);
       } catch (err) {
-        alert(err);
-        console.log(err);
+        alert(errorToDisplay(err));
       }
     }
     getAllUsersAndPets();
@@ -34,7 +33,61 @@ function Dashboard(props) {
   function handleShowPets() {
     setShowPets(!showPets);
   }
+  function renderPetsTable() {
+    return (
+      <div className="c-list">
+        <Table striped hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pets.map((pet) => (
+              <tr
+                key={pet.id}
+                onClick={() => navigate(`/admin/editpet/${pet.id}`)}
+              >
+                <td> {pet.name}</td>
+                <td> {pet.type}</td>
+                <td> {pet.adoption_status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    );
+  }
 
+  function renderUserTable() {
+    return (
+      <div className="c-list">
+        <Table striped hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr
+                key={user.id}
+                onClick={() => navigate(`/admin/user/${user.id}`)}
+              >
+                <td> {user.first_name + " " + user.last_name}</td>
+                <td> {user.email}</td>
+                <td> {user.is_admin ? "admin" : "pet owner"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    );
+  }
   return (
     <Container className="p-container">
       <h4 className="headline">
@@ -59,31 +112,7 @@ function Dashboard(props) {
           <Plus size={25} /> Add
         </Button>{" "}
       </div>
-      {showPets && (
-        <div className="c-list">
-          <Table striped hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pets.map((pet) => (
-                <tr
-                  key={pet.id}
-                  onClick={() => navigate(`/admin/editpet/${pet.id}`)}
-                >
-                  <td> {pet.name}</td>
-                  <td> {pet.type}</td>
-                  <td> {pet.adoption_status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-      )}
+      {showPets && renderPetsTable()}
       <h4 className="my-3 headline">
         Users{" "}
         {showUsers ? (
@@ -92,31 +121,7 @@ function Dashboard(props) {
           <CaretRightFill className="c-clickable" onClick={handleShowUsers} />
         )}
       </h4>
-      {showUsers && (
-        <div className="c-list">
-          <Table striped hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr
-                  key={user.id}
-                  onClick={() => navigate(`/admin/user/${user.id}`)}
-                >
-                  <td> {user.first_name + " " + user.last_name}</td>
-                  <td> {user.email}</td>
-                  <td> {user.is_admin ? "admin" : "pet owner"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-      )}
+      {showUsers && renderUserTable()}
     </Container>
   );
 }

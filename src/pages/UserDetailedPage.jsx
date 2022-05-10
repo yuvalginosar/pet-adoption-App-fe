@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Table } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUserFullById } from "../services/server";
-
+import './userDetailedPage.css'
 function UserDetailedPage(props) {
   const [user, setUser] = useState({});
   const id = useParams();
-  console.log(id);
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function getUserDetails() {
       try {
@@ -24,7 +25,7 @@ function UserDetailedPage(props) {
   return (
     <Container className="p-container">
       <Card>
-        <Card.Body>
+        <Card.Body className="centerd">
           <Card.Title className="my-3">
             {user.first_name + " " + user.last_name}
           </Card.Title>
@@ -35,11 +36,10 @@ function UserDetailedPage(props) {
           ) : (
             <Card.Text>{user.first_name} is a user/pet owner</Card.Text>
           )}
-
           <Card.Title className="mt-5"> Users pet's</Card.Title>
-
           {user.pets?.length > 0 ? (
-            <Table striped hover>
+            <div className="c-table">
+            <Table striped hover >
               <thead>
                 <tr>
                   <th>Pet's name</th>
@@ -49,7 +49,10 @@ function UserDetailedPage(props) {
               </thead>
               <tbody>
                 {user.pets.map((pet) => (
-                  <tr key={pet.id}>
+                  <tr key={pet.id}
+                  onClick={() => navigate(`/admin/editpet/${pet.id}`)}
+                  className='clickable'
+                  >
                     <td> {pet.name}</td>
                     <td> {pet.type}</td>
                     <td> {pet.status}</td>
@@ -57,9 +60,11 @@ function UserDetailedPage(props) {
                 ))}
               </tbody>
             </Table>
+            </div>
           ) : (
             <p>{user.first_name} do not own, foster or save any pets</p>
-          )}
+            )}
+            
         </Card.Body>
       </Card>
     </Container>

@@ -41,7 +41,7 @@ function SearchBar() {
       <Form className="c-form">
         {isadvanced ? (
           <div className="mb-3">
-            <Form.Group className="mb-2" controlId="formBasicEmail">
+            <Form.Group className="mb-2" controlId="adoptionStatus">
               <Form.Label>Adoption Status</Form.Label>
               <Form.Control
                 type="text"
@@ -51,7 +51,7 @@ function SearchBar() {
               <Form.Text className="text-muted"></Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-2" controlId="formBasicEmail">
+            <Form.Group className="mb-2" controlId="type">
               <Form.Label>Type</Form.Label>
               <Form.Control
                 type="text"
@@ -61,7 +61,7 @@ function SearchBar() {
               <Form.Text className="text-muted"></Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-2" controlId="formBasicEmail">
+            <Form.Group className="mb-2" controlId="height">
               <Form.Label>Height</Form.Label>
               <Form.Control
                 type="number"
@@ -71,7 +71,7 @@ function SearchBar() {
               <Form.Text className="text-muted"></Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-2" controlId="formBasicEmail">
+            <Form.Group className="mb-2" controlId="weight">
               <Form.Label>Weight</Form.Label>
               <Form.Control
                 type="number"
@@ -91,7 +91,7 @@ function SearchBar() {
             </Form.Group>
           </div>
         ) : (
-          <Form.Group className="my-2" controlId="formBasicEmail">
+          <Form.Group className="my-2" controlId="serachType">
             <Form.Control
               placeholder={"sesrch pet by type.."}
               type="text"

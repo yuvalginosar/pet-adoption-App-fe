@@ -21,7 +21,7 @@ function PetCard({pet}) {
         <Card.Body>
           <Card.Title>{pet.name} {pet.type ==='dog' ? <span>{dogIcon}</span> : <span>{catIcon}</span>}</Card.Title>
           <Card.Text>
-              <p>Adoption status: {pet.adoption_status}</p>
+              Adoption status: {pet.adoption_status}
           </Card.Text>
         </Card.Body>
        {activeUser ? <Button

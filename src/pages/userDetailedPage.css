@@ -1,0 +1,10 @@
+.centerd {
+    text-align: center;
+}
+.c-table {
+    width: 80%;
+    margin:auto;
+    height: 200px;
+  overflow-y: scroll;
+}
+

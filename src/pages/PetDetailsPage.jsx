@@ -15,7 +15,7 @@ import PetModal from "../components/PetModal";
 import { BookmarkHeart, BookmarkHeartFill } from "react-bootstrap-icons";
 import { faDog, faCat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import errorToDisplay from "../errorHandeling";
 function PetDetailsPage(props) {
   const [pet, setPet] = useState("");
   const [isSaved, setIsSaved] = useState(false);
@@ -37,21 +37,19 @@ function PetDetailsPage(props) {
           getStatusByIds(id.id, activeUser.id),
         ]);
         setPet(curPet);
-        currentPetStatus(petStatusForUser)
+        currentPetStatus(petStatusForUser);
       } catch (err) {
-        alert(err);
-        console.log(err);
+        alert(errorToDisplay(err));
       }
     }
     fetchPets();
   }, [isSaved, isLoading]);
 
   function currentPetStatus(array) {
-    if (array.length === 0){
-        setPetStatus(null);  
-    } 
-    else {
-        setPetStatus(array[0].status);
+    if (array.length === 0) {
+      setPetStatus(null);
+    } else {
+      setPetStatus(array[0].status);
     }
   }
 
@@ -64,8 +62,7 @@ function PetDetailsPage(props) {
       setIsSaved(!isSaved);
       setIsLoading(false);
     } catch (err) {
-      alert(err);
-      console.log(err);
+      alert(errorToDisplay(err));
     }
   }
   async function handleDeleteSavedPet() {
@@ -77,8 +74,7 @@ function PetDetailsPage(props) {
       setIsSaved(!isSaved);
       setIsLoading(false);
     } catch (err) {
-      alert(err);
-      console.log(err);
+      alert(errorToDisplay(err));
     }
   }
 
@@ -94,8 +90,7 @@ function PetDetailsPage(props) {
       setIsLoading(false);
       handleShow();
     } catch (err) {
-      alert(err);
-      console.log(err);
+      alert(errorToDisplay(err));
       navigate("/");
     }
   }
@@ -110,12 +105,56 @@ function PetDetailsPage(props) {
       setIsLoading(false);
       handleShow();
     } catch (err) {
-      alert(err);
-      console.log(err);
+      alert(errorToDisplay(err));
     }
   }
   const dogIcon = <FontAwesomeIcon icon={faDog} />;
   const catIcon = <FontAwesomeIcon icon={faCat} />;
+
+  // function buttonComponent(action, handleFunction) {
+  //   return (
+  //     <Button
+  //         variant="outline-success"
+  //         size="sm"
+  //         type="button"
+  //         onClick={() => handleFunction}
+  //       >
+  //         {action}
+  //       </Button>
+  //   )
+  // }
+  function renderButtonsAdoptFoster() {
+    return (
+      <div className="mb-2 align">
+        <Button
+          variant="outline-success"
+          size="sm"
+          type="button"
+          onClick={() => handleAdoptOrFosterPet("adopt")}
+        >
+          Addopt
+        </Button>{" "}
+        <Button
+          className="mx-2"
+          variant="outline-success"
+          size="sm"
+          type="button"
+          onClick={() => handleAdoptOrFosterPet("foster")}
+        >
+          Foster
+        </Button>
+        {isLoading && (
+          <Spinner
+            as="span"
+            animation="grow"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
+        )}
+      </div>
+    );
+  }
 
   return (
     <Container className="p-container">
@@ -190,36 +229,8 @@ function PetDetailsPage(props) {
             </div>
           </Card.Body>
           {pet.adoption_status === "Available" &&
-            (petStatus === null || petStatus === "save") && (
-              <div className="mb-2 align">
-                <Button
-                  variant="outline-success"
-                  size="sm"
-                  type="button"
-                  onClick={() => handleAdoptOrFosterPet("adopt")}
-                >
-                  Addopt
-                </Button>{" "}
-                <Button
-                  className="mx-2"
-                  variant="outline-success"
-                  size="sm"
-                  type="button"
-                  onClick={() => handleAdoptOrFosterPet("foster")}
-                >
-                  Foster
-                </Button>
-                {isLoading && (
-                  <Spinner
-                    as="span"
-                    animation="grow"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-            )}
+            (petStatus === null || petStatus === "save") &&
+            renderButtonsAdoptFoster()}
           <div className="mb-2 align">
             {pet.adoption_status === "Fostered" && petStatus !== "adopt" && (
               <div className="mb-2">

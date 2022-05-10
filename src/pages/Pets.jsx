@@ -33,7 +33,6 @@ function Pets(props) {
 
   return (
     <Container className="p-container">
-
       <Nav variant="tabs" defaultActiveKey="/home">
         <Nav.Item>
           <Nav.Link onClick={() => setMyPets(true)}> My Pets</Nav.Link>
@@ -42,10 +41,9 @@ function Pets(props) {
           <Nav.Link onClick={() => setMyPets(false)}>Saved Pets</Nav.Link>
         </Nav.Item>
       </Nav>
-
-    
-
-      <Row xs={1} md={2} className="g-4">
+    {(usersPets.length === 0) && (myPets) && <h5 className="my-2">You currently do not own or foster any pets</h5>}
+    {(usersPets.length === 0) && (!myPets) && <h5 className="my-2">You currently do not have any saved pets</h5>}
+      <Row xs={1} md={2} className="g-4 my-1">
         {usersPets.map((pet) => (
           <Col key={pet.id}>
             <PetCard pet={pet} />

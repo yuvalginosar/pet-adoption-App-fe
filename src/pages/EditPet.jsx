@@ -6,14 +6,13 @@ import useAuth from "../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPetById, updatePetDetails } from "../services/server.js";
 import "../components/forms.css";
-
+import errorToDisplay from "../errorHandeling";
 function EditPet(props) {
   const navigate = useNavigate();
   const [pet, setPet] = useState("");
 
   const [type, setType] = useState("");
   const [name, setName] = useState("");
-  const [adoptionStatus, setAdoptionStatus] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [color, setColor] = useState("");
@@ -28,9 +27,12 @@ function EditPet(props) {
 
   useEffect(() => {
     async function fetchPets() {
-      const curPet = await getPetById(id.id);
-      setPet(curPet);
-      console.log(pet);
+      try {
+        const curPet = await getPetById(id.id);
+        setPet(curPet);
+      } catch (err) {
+        alert(errorToDisplay(err));
+      }
     }
     fetchPets();
   }, []);
@@ -41,12 +43,8 @@ function EditPet(props) {
       : "";
 
     const petDetails = {};
-    // const teypeAttr = (type.length > 0) && {type}
-    // const res = {...teypeAttr, }
     if (type.length > 0) petDetails["type"] = type;
     if (name.length > 0) petDetails["name"] = name;
-    if (adoptionStatus.length > 0)
-      petDetails["adoption_status"] = adoptionStatus;
     if (weight.length > 0) petDetails["weight"] = weight;
     if (height.length > 0) petDetails["height"] = height;
     if (bio.length > 0) petDetails["bio"] = bio;
@@ -98,27 +96,16 @@ function EditPet(props) {
         </Form.Group>
 
         <Form.Label className="my-3">
-          
           <Image
             src={pet.picture}
             width={100}
             height={100}
             rounded={true}
-          >
-          </Image>
+          ></Image>
         </Form.Label>
         <Form.Group controlId="formFile">
           <Form.Control ref={fileImgRef} type="file" accept="image/*" />
         </Form.Group>
-
-        <Form.Label className="mt-3">
-          Adoption Status: currently {pet.adoption_status}
-        </Form.Label>
-        <Form.Select onChange={(e) => setAdoptionStatus(e.target.value)}>
-          <option value="Available">Available</option>
-          <option value="Fostered">Fostered</option>
-          <option value="Adopted">Adopted</option>
-        </Form.Select>
 
         <Form.Group className="mt-3" controlId="formBasicEmail">
           <Form.Label>Weight</Form.Label>

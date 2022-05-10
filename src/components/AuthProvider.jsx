@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
+import errorToDisplay from "../errorHandeling";
 import {
   login,
   signup,
@@ -25,8 +26,8 @@ function AuthProvider({ children }) {
         navigate("/");
       }
     } catch (err) {
-      alert(err);
-      console.log(err);
+      console.log(JSON.parse(JSON.stringify(err)).status)
+      alert(errorToDisplay(err));
     }
   }
 
@@ -45,21 +46,18 @@ function AuthProvider({ children }) {
         navigate("/");
       }
     } catch (err) {
-      alert(err);
-      console.log(err);
+      alert(errorToDisplay(err));
+
     }
   }
   async function handleSignUp(newUser) {
     try {
       const user = await signup(newUser);
       if (user) {
-        // localStorage.activeUser = JSON.stringify(user);
-        // setActiveUser(user);
         navigate("/");
       }
     } catch (err) {
-      alert(err);
-      console.log(err);
+      alert(errorToDisplay(err));
     }
   }
 
