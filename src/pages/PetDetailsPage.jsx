@@ -16,6 +16,8 @@ import { BookmarkHeart, BookmarkHeartFill } from "react-bootstrap-icons";
 import { faDog, faCat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import errorToDisplay from "../errorHandeling";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 function PetDetailsPage(props) {
   const [pet, setPet] = useState("");
   const [isSaved, setIsSaved] = useState(false);
@@ -111,38 +113,32 @@ function PetDetailsPage(props) {
   const dogIcon = <FontAwesomeIcon icon={faDog} />;
   const catIcon = <FontAwesomeIcon icon={faCat} />;
 
-  // function buttonComponent(action, handleFunction) {
-  //   return (
-  //     <Button
-  //         variant="outline-success"
-  //         size="sm"
-  //         type="button"
-  //         onClick={() => handleFunction}
-  //       >
-  //         {action}
-  //       </Button>
-  //   )
-  // }
+  function renderTooltip(props){ 
+    if(petStatus === null) {return(
+    <Tooltip {...props}>Add to my saved pets</Tooltip>
+  )}else if (petStatus === 'save')  {return(
+    <Tooltip {...props}>Remove from my saved pets</Tooltip>
+  )}
+};
+
+  function buttonComponent(action, handleFunction) {
+    return (
+      <Button
+        className="me-2"
+        variant="outline-success"
+        size="sm"
+        type="button"
+        onClick={() => handleFunction(action.toLowerCase())}
+      >
+        {action}
+      </Button>
+    );
+  }
   function renderButtonsAdoptFoster() {
     return (
       <div className="mb-2 align">
-        <Button
-          variant="outline-success"
-          size="sm"
-          type="button"
-          onClick={() => handleAdoptOrFosterPet("adopt")}
-        >
-          Addopt
-        </Button>{" "}
-        <Button
-          className="mx-2"
-          variant="outline-success"
-          size="sm"
-          type="button"
-          onClick={() => handleAdoptOrFosterPet("foster")}
-        >
-          Foster
-        </Button>
+        {buttonComponent("Adopt", handleAdoptOrFosterPet)}
+        {buttonComponent("Foster", handleAdoptOrFosterPet)}
         {isLoading && (
           <Spinner
             as="span"
@@ -157,7 +153,7 @@ function PetDetailsPage(props) {
   }
 
   return (
-    <Container className="p-container">
+    <Container className="p-container my-2">
       {userAction && (
         <PetModal
           name={pet.name}
@@ -172,33 +168,38 @@ function PetDetailsPage(props) {
             <Card.Img
               variant="top"
               src={pet.picture}
-              width={100}
-              height={500}
             />
           ) : (
             <p className="ms-1">no available img</p>
           )}
           <Card.Body>
             <Card.Title className="card-title">
+              
+              <span className="c-bold">{pet.name}</span>, {pet.adoption_status}  
               {pet.type === "dog" ? (
-                <span>{dogIcon}</span>
+                <span className="ms-4">{dogIcon}</span>
               ) : (
                 <span>{catIcon}</span>
               )}{" "}
-              {pet.name}, {pet.adoption_status}
               {pet.adoption_status !== "Adopted" && petStatus === null && (
+                <OverlayTrigger placement="top" overlay={renderTooltip}>
                 <BookmarkHeart
-                  className="mx-3 clickable"
+                  className="mx-1 clickable"
                   onClick={handleSavePet}
                   size={25}
                 ></BookmarkHeart>
+                </OverlayTrigger>
               )}
               {petStatus === "save" && (
+                                <OverlayTrigger placement="top" overlay={renderTooltip}>
+
                 <BookmarkHeartFill
-                  className="mx-3 clickable"
+                  className="mx-1 clickable"
                   onClick={handleDeleteSavedPet}
                   size={25}
                 ></BookmarkHeartFill>
+                                </OverlayTrigger>
+
               )}
             </Card.Title>
             <div className="one-line">
@@ -234,15 +235,7 @@ function PetDetailsPage(props) {
           <div className="mb-2 align">
             {pet.adoption_status === "Fostered" && petStatus !== "adopt" && (
               <div className="mb-2">
-                <Button
-                  className="mx-2"
-                  variant="outline-success"
-                  size="sm"
-                  type="button"
-                  onClick={() => handleAdoptOrFosterPet("adopt")}
-                >
-                  Addopt
-                </Button>{" "}
+                {buttonComponent("Adopt", handleAdoptOrFosterPet)}
               </div>
             )}
             {((pet.adoption_status === "Adopted" && petStatus === "adopt") ||

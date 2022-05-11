@@ -7,6 +7,7 @@
 
 .c-bold {
     font-weight: bold;
+    font-size:larger;
 }
 
 .one-line {
@@ -17,9 +18,9 @@
     justify-content: space-around;
 }
 .card-title {
-    margin: 3%;
+    margin: 5%;
+    font-size:xx-large;
 }
 .clickable :hover {
     cursor: pointer;
-    color: blue;
 }
