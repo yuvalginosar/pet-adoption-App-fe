@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Container, Table } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserFullById } from "../services/server";
-import './userDetailedPage.css'
+import "./userDetailedPage.css";
 function UserDetailedPage(props) {
   const [user, setUser] = useState({});
   const id = useParams();
@@ -36,35 +36,36 @@ function UserDetailedPage(props) {
           ) : (
             <Card.Text>{user.first_name} is a user/pet owner</Card.Text>
           )}
+          <Card.Text>User's bio: {user.bio}</Card.Text>
           <Card.Title className="mt-5"> Users pet's</Card.Title>
           {user.pets?.length > 0 ? (
             <div className="c-table">
-            <Table striped hover >
-              <thead>
-                <tr>
-                  <th>Pet's name</th>
-                  <th>Type</th>
-                  <th>status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {user.pets.map((pet) => (
-                  <tr key={pet.id}
-                  onClick={() => navigate(`/admin/editpet/${pet.id}`)}
-                  className='clickable'
-                  >
-                    <td> {pet.name}</td>
-                    <td> {pet.type}</td>
-                    <td> {pet.status}</td>
+              <Table striped hover>
+                <thead>
+                  <tr>
+                    <th>Pet's name</th>
+                    <th>Type</th>
+                    <th>status</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {user.pets.map((pet) => (
+                    <tr
+                      key={pet.id}
+                      onClick={() => navigate(`/admin/editpet/${pet.id}`)}
+                      className="clickable"
+                    >
+                      <td> {pet.name}</td>
+                      <td> {pet.type}</td>
+                      <td> {pet.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             </div>
           ) : (
             <p>{user.first_name} do not own, foster or save any pets</p>
-            )}
-            
+          )}
         </Card.Body>
       </Card>
     </Container>

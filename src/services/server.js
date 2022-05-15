@@ -1,6 +1,7 @@
 import axios from "axios";
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  // baseURL: "http://localhost:8080",
+baseURL: process.env.REACT_APP_SERVER_URL,
   withCredentials: true,
 });
 
@@ -98,21 +99,21 @@ async function updatePetDetails(detailsToUpdate, id) {
       formData.append(`${key}`, value);
     }
   }
-    const response = await api.put(`/pet/${id}`, formData);
-    return response.data;
+  const response = await api.put(`/pet/${id}`, formData);
+  return response.data;
 }
 async function getUsers() {
-    const response = await api.get("/user");
-    return response.data;
+  const response = await api.get("/user");
+  return response.data;
 }
 
 async function getUserFullById(id) {
-    const response = await api.get(`/user/${id}/full`);
-    return response.data;
+  const response = await api.get(`/user/${id}/full`);
+  return response.data;
 }
 async function getStatusByIds(petid, userid) {
-    const response = await api.get(`/pet/${petid}/user/${userid}`);
-    return response.data;
+  const response = await api.get(`/pet/${petid}/user/${userid}`);
+  return response.data;
 }
 
 export {
