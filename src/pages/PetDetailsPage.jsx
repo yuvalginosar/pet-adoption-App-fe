@@ -113,13 +113,13 @@ function PetDetailsPage(props) {
   const dogIcon = <FontAwesomeIcon icon={faDog} />;
   const catIcon = <FontAwesomeIcon icon={faCat} />;
 
-  function renderTooltip(props){ 
-    if(petStatus === null) {return(
-    <Tooltip {...props}>Add to my saved pets</Tooltip>
-  )}else if (petStatus === 'save')  {return(
-    <Tooltip {...props}>Remove from my saved pets</Tooltip>
-  )}
-};
+  function renderTooltip(props) {
+    if (petStatus === null) {
+      return <Tooltip {...props}>Add to my saved pets</Tooltip>;
+    } else if (petStatus === "save") {
+      return <Tooltip {...props}>Remove from my saved pets</Tooltip>;
+    }
+  }
 
   function buttonComponent(action, handleFunction) {
     return (
@@ -165,17 +165,13 @@ function PetDetailsPage(props) {
       {pet && (
         <Card className="my-3 c-card">
           {pet.picture ? (
-            <Card.Img
-              variant="top"
-              src={pet.picture}
-            />
+            <Card.Img variant="top" src={pet.picture} />
           ) : (
             <p className="ms-1">no available img</p>
           )}
           <Card.Body>
             <Card.Title className="card-title">
-              
-              <span className="c-bold">{pet.name}</span>, {pet.adoption_status}  
+              <span className="c-bold">{pet.name}</span>, {pet.adoption_status}
               {pet.type === "dog" ? (
                 <span className="ms-4">{dogIcon}</span>
               ) : (
@@ -183,23 +179,21 @@ function PetDetailsPage(props) {
               )}{" "}
               {pet.adoption_status !== "Adopted" && petStatus === null && (
                 <OverlayTrigger placement="top" overlay={renderTooltip}>
-                <BookmarkHeart
-                  className="mx-1 clickable"
-                  onClick={handleSavePet}
-                  size={25}
-                ></BookmarkHeart>
+                  <BookmarkHeart
+                    className="mx-1 clickable"
+                    onClick={handleSavePet}
+                    size={25}
+                  ></BookmarkHeart>
                 </OverlayTrigger>
               )}
               {petStatus === "save" && (
-                                <OverlayTrigger placement="top" overlay={renderTooltip}>
-
-                <BookmarkHeartFill
-                  className="mx-1 clickable"
-                  onClick={handleDeleteSavedPet}
-                  size={25}
-                ></BookmarkHeartFill>
-                                </OverlayTrigger>
-
+                <OverlayTrigger placement="top" overlay={renderTooltip}>
+                  <BookmarkHeartFill
+                    className="mx-1 clickable"
+                    onClick={handleDeleteSavedPet}
+                    size={25}
+                  ></BookmarkHeartFill>
+                </OverlayTrigger>
               )}
             </Card.Title>
             <div className="one-line">
