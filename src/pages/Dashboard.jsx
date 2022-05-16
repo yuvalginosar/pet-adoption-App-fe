@@ -91,7 +91,7 @@ function Dashboard(props) {
   return (
     <Container className="p-container">
       <h4 className="headline">
-        Welcom {activeUser.first_name} {activeUser.last_name}!
+        Hello {activeUser.first_name} {activeUser.last_name}!
       </h4>
       <SearchBar />
       <div className="aligned">
